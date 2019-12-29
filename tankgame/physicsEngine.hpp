@@ -1,14 +1,11 @@
-//
-//  physicsEngine.hpp
-//  tankgame
-//
-//  Created by Emin Ayar on 29.12.2019.
-//  Copyright © 2019 Emin Ayar. All rights reserved.
-//
-
 #ifndef physicsEngine_hpp
 #define physicsEngine_hpp
 
 #include <stdio.h>
+#include "gameState.h"
+#include "graphicsEngine.hpp"
+
+bool check_validity_of_bullet(double x, double y);
+bool check_validity_of_player(double x, double y);
 
 #endif /* physicsEngine_hpp */

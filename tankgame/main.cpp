@@ -6,10 +6,10 @@
 //  Copyright © 2019 Emin Ayar. All rights reserved.
 //
 
-#include <iostream>
+#include "graphicsEngine.hpp"
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
+int main(int argc, char ** argv) {
+    graphics_engine_init(&argc,argv);
     return 0;
 }
+

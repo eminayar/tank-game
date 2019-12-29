@@ -8,23 +8,40 @@
 
 /* Begin PBXBuildFile section */
 		9B05992B23B82CD50016D5B4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05992A23B82CD50016D5B4 /* main.cpp */; };
+		9B05993323B82CFA0016D5B4 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B05993223B82CFA0016D5B4 /* GLUT.framework */; };
+		9B05993523B82D070016D5B4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B05993423B82D070016D5B4 /* OpenGL.framework */; };
+		9B05993823B82D4B0016D5B4 /* graphicsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993623B82D4B0016D5B4 /* graphicsEngine.cpp */; };
+		9B05993B23B82D5D0016D5B4 /* physicsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993923B82D5D0016D5B4 /* physicsEngine.cpp */; };
+		9B05993E23B845B80016D5B4 /* gameState.h in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993C23B831510016D5B4 /* gameState.h */; };
+		9B05993F23B845B80016D5B4 /* graphicsEngine.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993723B82D4B0016D5B4 /* graphicsEngine.hpp */; };
+		9B05994023B845B80016D5B4 /* physicsEngine.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993A23B82D5D0016D5B4 /* physicsEngine.hpp */; };
+		9B1F007323B8C62D0022563A /* map.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B1F007223B8C6170022563A /* map.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		9B05992523B82CD50016D5B4 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				9B1F007323B8C62D0022563A /* map.txt in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9B05992723B82CD50016D5B4 /* tankgame */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tankgame; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B05992A23B82CD50016D5B4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9B05993223B82CFA0016D5B4 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		9B05993423B82D070016D5B4 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		9B05993623B82D4B0016D5B4 /* graphicsEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = graphicsEngine.cpp; sourceTree = "<group>"; };
+		9B05993723B82D4B0016D5B4 /* graphicsEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = graphicsEngine.hpp; sourceTree = "<group>"; };
+		9B05993923B82D5D0016D5B4 /* physicsEngine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = physicsEngine.cpp; sourceTree = "<group>"; };
+		9B05993A23B82D5D0016D5B4 /* physicsEngine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = physicsEngine.hpp; sourceTree = "<group>"; };
+		9B05993C23B831510016D5B4 /* gameState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gameState.h; sourceTree = "<group>"; };
+		9B1F007223B8C6170022563A /* map.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = map.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +49,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B05993523B82D070016D5B4 /* OpenGL.framework in Frameworks */,
+				9B05993323B82CFA0016D5B4 /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +62,7 @@
 			children = (
 				9B05992923B82CD50016D5B4 /* tankgame */,
 				9B05992823B82CD50016D5B4 /* Products */,
+				9B05993123B82CFA0016D5B4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,8 +78,23 @@
 			isa = PBXGroup;
 			children = (
 				9B05992A23B82CD50016D5B4 /* main.cpp */,
+				9B05993C23B831510016D5B4 /* gameState.h */,
+				9B05993623B82D4B0016D5B4 /* graphicsEngine.cpp */,
+				9B05993723B82D4B0016D5B4 /* graphicsEngine.hpp */,
+				9B05993923B82D5D0016D5B4 /* physicsEngine.cpp */,
+				9B05993A23B82D5D0016D5B4 /* physicsEngine.hpp */,
+				9B1F007223B8C6170022563A /* map.txt */,
 			);
 			path = tankgame;
+			sourceTree = "<group>";
+		};
+		9B05993123B82CFA0016D5B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9B05993423B82D070016D5B4 /* OpenGL.framework */,
+				9B05993223B82CFA0016D5B4 /* GLUT.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +154,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B05993E23B845B80016D5B4 /* gameState.h in Sources */,
+				9B05993F23B845B80016D5B4 /* graphicsEngine.hpp in Sources */,
+				9B05994023B845B80016D5B4 /* physicsEngine.hpp in Sources */,
+				9B05993823B82D4B0016D5B4 /* graphicsEngine.cpp in Sources */,
+				9B05993B23B82D5D0016D5B4 /* physicsEngine.cpp in Sources */,
 				9B05992B23B82CD50016D5B4 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -164,7 +204,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -221,7 +261,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_NO_COMMON_BLOCKS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -239,6 +279,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				GCC_NO_COMMON_BLOCKS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -247,6 +288,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				GCC_NO_COMMON_BLOCKS = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
