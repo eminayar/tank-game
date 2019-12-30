@@ -15,6 +15,7 @@ struct Point{
 
 struct Bullet{
     Point ref;
+    bool is_alive;
     double direction;
 };
 
@@ -23,8 +24,9 @@ struct Player{
     double direction;
     Point ref;
     bool is_alive;
-    std::string player_id;
-    double red,geen,blue;
+    int player_id;
+    long timestamp;
+    double red,green,blue;
     std::vector <Bullet> bullets;
 };
 

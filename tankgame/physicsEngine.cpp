@@ -10,8 +10,6 @@ bool collision_check( Rectangle first , Rectangle second){
     }
     for(auto point:first.corners ){
         if( point.x >= min_x && point.x <= max_x && point.y >= min_y && point.y <= max_y ){
-            std::cout << min_x << " " << min_y << " " << max_x << " " << max_y << std::endl;
-            std::cout << point.x << " " << point.y << std::endl;
             return false;
         }
     }
@@ -47,6 +45,13 @@ bool check_validity_of_bullet(double x, double y){
     }
     if( x-BULLET_SIZE < -1 || x+BULLET_SIZE > 1 || y-BULLET_SIZE < -1 || y+BULLET_SIZE > 1 )
         return false;
+    for(auto player:game_state->players){
+        if(player.player_id == me.player_id)
+            continue;
+        Rectangle player_as_rect = player_to_rect(player.ref.x, player.ref.y);
+        if( !collision_check(bullet_as_rect, player_as_rect) )
+            return false;
+    }
     return true;
 }
 

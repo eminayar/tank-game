@@ -8,14 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		9B05992B23B82CD50016D5B4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05992A23B82CD50016D5B4 /* main.cpp */; };
-		9B05993323B82CFA0016D5B4 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B05993223B82CFA0016D5B4 /* GLUT.framework */; };
-		9B05993523B82D070016D5B4 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B05993423B82D070016D5B4 /* OpenGL.framework */; };
 		9B05993823B82D4B0016D5B4 /* graphicsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993623B82D4B0016D5B4 /* graphicsEngine.cpp */; };
 		9B05993B23B82D5D0016D5B4 /* physicsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993923B82D5D0016D5B4 /* physicsEngine.cpp */; };
 		9B05993E23B845B80016D5B4 /* gameState.h in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993C23B831510016D5B4 /* gameState.h */; };
 		9B05993F23B845B80016D5B4 /* graphicsEngine.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993723B82D4B0016D5B4 /* graphicsEngine.hpp */; };
 		9B05994023B845B80016D5B4 /* physicsEngine.hpp in Sources */ = {isa = PBXBuildFile; fileRef = 9B05993A23B82D5D0016D5B4 /* physicsEngine.hpp */; };
 		9B1F007323B8C62D0022563A /* map.txt in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9B1F007223B8C6170022563A /* map.txt */; };
+		9B1F007423B93A210022563A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B05993223B82CFA0016D5B4 /* GLUT.framework */; };
+		9B1F007723B93A230022563A /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B05993423B82D070016D5B4 /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,8 +49,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B05993523B82D070016D5B4 /* OpenGL.framework in Frameworks */,
-				9B05993323B82CFA0016D5B4 /* GLUT.framework in Frameworks */,
+				9B1F007423B93A210022563A /* GLUT.framework in Frameworks */,
+				9B1F007723B93A230022563A /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

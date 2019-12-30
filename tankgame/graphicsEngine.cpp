@@ -11,6 +11,7 @@ GameState *game_state,*game_state_buffer;
 bool pending_gamestate_change = false;
 Map *game_map;
 Player me = Player();
+bool new_data_available = false;
 
 void graphics_engine_init(int *argcp, char **argv){
     game_map = new Map();
@@ -21,6 +22,9 @@ void graphics_engine_init(int *argcp, char **argv){
     me.ref.x=0;
     me.ref.y=-0.2;
     me.direction=0.0;
+    me.red=0;
+    me.green=0;
+    me.blue=255;
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
     glutInitWindowSize(2000,2000);
     glutCreateWindow("TANK");
@@ -89,7 +93,7 @@ inline void drawSquare(Point p, double size, double r , double g, double b){
 }
 
 inline void drawTank(Player p){
-    drawSquare(p.ref, TANK_SIZE, 0, 0, 255 );
+    drawSquare(p.ref, TANK_SIZE, p.red, p.green, p.blue );
     drawSquare(p.ref, TANK_SIZE/2.0, 0, 0, 0 );
     glBegin(GL_LINES);
     glColor3d((GLdouble) 0, (GLdouble) 0, (GLdouble) 0 );
@@ -97,8 +101,58 @@ inline void drawTank(Player p){
     glVertex2f(SHIFT_WIDTH+GAME_WINDOW_LEN*((p.ref.x+1.0+cos(p.direction)*TANK_SIZE)/2.0), SHIFT_HEIGHT+GAME_WINDOW_LEN*((p.ref.y+1.0+sin(p.direction)*TANK_SIZE)/2.0));
     glEnd();
     for(auto bullet:p.bullets){
-        drawSquare(bullet.ref, BULLET_SIZE, 0, 0, 255);
+        if(bullet.is_alive)
+            drawSquare(bullet.ref, BULLET_SIZE, p.red, p.green, p.blue);
     }
+}
+
+int resolvehelper(const char* hostname, int family, const char* service, sockaddr_storage* pAddr)
+{
+    int result;
+    addrinfo* result_list = NULL;
+    addrinfo hints = {};
+    hints.ai_family = family;
+    hints.ai_socktype = SOCK_DGRAM; // without this flag, getaddrinfo will return 3x the number of addresses (one for each socket type).
+    result = getaddrinfo(hostname, service, &hints, &result_list);
+    if (result == 0)
+    {
+        //ASSERT(result_list->ai_addrlen <= sizeof(sockaddr_in));
+        memcpy(pAddr, result_list->ai_addr, result_list->ai_addrlen);
+        freeaddrinfo(result_list);
+    }
+
+    return result;
+}
+
+inline void send_state(){
+//    std::cout << "advertiser started" << " " << my_ip << std::endl;
+    int sock;
+    int broadcast = 1;
+    struct sockaddr_in broadcast_addr;
+    int ret;
+    char buffer[1024];
+
+    sock = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sock < 0) {
+        perror("sock error");
+    }
+    ret = setsockopt(sock, SOL_SOCKET, SO_BROADCAST, (char *)&broadcast, sizeof(broadcast));
+    if (ret == -1) {
+        perror("setsockopt error");
+    }
+
+    broadcast_addr.sin_family = AF_INET;
+    broadcast_addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
+    broadcast_addr.sin_port = htons(PLAYER_PORT);
+    std::string msg = my_ip;
+    msg += ","+std::to_string(me.ref.x)+","+std::to_string(me.ref.y)+","+std::to_string(me.direction);
+    msg += ","+std::to_string(me.bullets.size());
+    for( auto bullet:me.bullets ){
+        msg+= ","+std::to_string(bullet.ref.x)+","+std::to_string(bullet.ref.y)+","+std::to_string(bullet.direction);
+    }
+    strcpy(buffer, msg.c_str());
+    sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr*) &broadcast_addr, sizeof(broadcast_addr));
+    close(sock);
 }
 
 void render(){
@@ -108,7 +162,19 @@ void render(){
     auto now=std::chrono::high_resolution_clock::now();
     unsigned long nanos = std::chrono::duration_cast<std::chrono::nanoseconds>(now.time_since_epoch()).count();
     
+    if( new_data_available ){
+        std::swap(game_state_buffer, game_state);
+        me = game_state->players[me.player_id];
+        new_data_available=false;
+    }
+    
+    double diff = ((double)(nanos-last_frame_nano))/1e9;
+    
     render_map();
+    for(auto player:game_state->players){
+        if(player.player_id != me.player_id )
+            drawTank(player);
+    }
     drawTank(me);
     
     double new_x=me.ref.x,new_y=me.ref.y;
@@ -118,8 +184,6 @@ void render(){
         glutSwapBuffers();
         return;
     }
-    
-    double diff = ((double)(nanos-last_frame_nano))/1e9;
     
     if( w_pressed ){
         new_y = me.ref.y-diff*TANK_SPEED;
@@ -138,30 +202,35 @@ void render(){
     
     for( int i=0 ; i<(int)me.bullets.size() ; i++ ){
         Bullet &bullet = me.bullets[i];
+        if( !bullet.is_alive )
+            continue;
         new_x=bullet.ref.x + cos(bullet.direction)*BULLET_SPEED*diff;
         new_y=bullet.ref.y + sin(bullet.direction)*BULLET_SPEED*diff;
         if( check_validity_of_bullet(new_x, new_y) ){
             bullet.ref.x = new_x;
             bullet.ref.y = new_y;
         }else{
-            me.bullets.erase(me.bullets.begin()+i);
-            i--;
+            bullet.ref.x = new_x;
+            bullet.ref.y = new_y;
+            bullet.is_alive = false;
         }
     }
     
     if( space_pressed and nanos-last_bullet_nano > 200000000){
         last_bullet_nano = nanos;
         Bullet bullet = Bullet();
+        bullet.is_alive = true;
         bullet.ref.x = me.ref.x;
         bullet.ref.y = me.ref.y;
         bullet.direction = me.direction;
         me.bullets.push_back(bullet);
     }
     
-    if(pending_gamestate_change){
-        pending_gamestate_change = false;
-        std::swap(game_state,game_state_buffer);
+    if(nanos-last_state_nano > 30000000 ){
+        last_state_nano=nanos;
+        send_state();
     }
+    
     last_frame_nano = nanos;
     glutSwapBuffers();
 }
